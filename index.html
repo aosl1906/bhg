@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Breath Holding Game</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#1a2744">
+
+    <!-- Apple / iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BHG">
+    <link rel="apple-touch-icon" href="icon-180.png">
+
+    <!-- SEO -->
+    <meta name="description" content="Halte die Luft an – ein Kartenspiel für deine Lunge!">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Breath Holding Game</h1>
+            <div class="status-banner" id="statusBanner">DRÜCKE START</div>
+        </header>
+
+        <div class="timers">
+            <div class="timer-box">
+                <span class="label">Gesamtzeit</span>
+                <span class="time" id="totalTime">00:00</span>
+            </div>
+            <div class="timer-box breath-timer" id="breathTimerBox">
+                <span class="label">Atem-Anhaltezeit</span>
+                <span class="time" id="holdTime">00:00</span>
+            </div>
+            <div class="timer-box remaining-timer" id="remainingTimerBox">
+                <span class="label">Verbleibende Haltezeit</span>
+                <span class="time" id="remainingTime">--:--</span>
+            </div>
+        </div>
+
+        <div class="middle-section">
+            <div class="game-area">
+                <div class="deck" id="deck" title="Verbleibende Karten">
+                    <div class="card back"></div>
+                    <div class="card-count" id="cardCount">52</div>
+                </div>
+
+                <div class="active-card-container">
+                    <div class="card" id="activeCard">
+                        <!-- Front injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="history-chart-container">
+                <h3>Atemanhalte-Historie</h3>
+                <div class="bar-chart" id="barChart">
+                    <!-- Bars injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <h3>Historie / Zeitstrahl</h3>
+            <div class="timeline" id="timeline">
+                <!-- Timeline items injected here -->
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="slider-group">
+                <label for="intervalSlider">Intervall: <span id="intervalValue">5</span> Sekunden</label>
+                <input type="range" id="intervalSlider" min="2" max="30" value="5">
+            </div>
+            <div class="button-group">
+                <button id="btnShuffle" class="btn secondary">Mischen & Neustart</button>
+                <button id="btnStart" class="btn primary">Start</button>
+                <button id="btnStop" class="btn danger" disabled>Stop</button>
+            </div>
+        </div>
+
+        <div class="settings-container">
+            <h3>Karten zum Atmen (Schwierigkeit)</h3>
+            <p>Wähle die Karten, bei denen du atmen darfst:</p>
+            <div class="rank-selector" id="rankSelector">
+                <!-- Rank chips injected by JS -->
+            </div>
+        </div>
+
+        <div class="histogram-container">
+            <h3>Wahrscheinlichkeiten der Anhaltezeiten</h3>
+            <p>Erwartete Dauer der Anhaltephasen in %</p>
+            <div class="histogram" id="histogram">
+                <!-- Bars injected by JS -->
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
